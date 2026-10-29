@@ -7,75 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #3A6EA5;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      box-sizing: border-box;
-      user-select: none;
-      font-family: 'Pixelify Sans', sans-serif;
-    }
-
-    /* Player Wrapper */
-    .player-wrapper {
-      position: relative;
-      border-radius: 13px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-      image-rendering: pixelated;
-    }
-
-    /* WMP Container dengan Filter Retro Burik */
-    .wmp-container {
-      width: 572px;
-      height: 609px;
-      position: relative;
-      background: #0645C5;
-      overflow: hidden;
-      border-radius: 13px;
-      outline: 1px #00338E solid;
-      outline-offset: -1px;
-      image-rendering: pixelated;
-      filter: url(#filter-burik) contrast(120%) saturate(115%);
-    }
-
-    /* Layer Overlay CRT Scanlines & Dither */
-    .retro-screen-overlay {
-      position: absolute;
-      inset: 0;
-      border-radius: 13px;
-      pointer-events: none;
-      z-index: 9999;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.28) 0px,
-          rgba(0, 0, 0, 0.28) 1.5px,
-          transparent 1.5px,
-          transparent 3px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255, 0, 0, 0.07) 0px,
-          rgba(0, 255, 0, 0.07) 1px,
-          rgba(0, 0, 255, 0.07) 2px,
-          transparent 3px
-        ),
-        repeating-conic-gradient(
-          rgba(0, 0, 0, 0.12) 0% 25%,
-          transparent 0% 50%
-        ) 50% / 3px 3px,
-        radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.42) 100%);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -145,7 +77,11 @@
       <div style="width: 20px; height: 19px; left: 140px; top: 4px; position: absolute; border: 2px #B9CDEA solid"></div>
     </div>
   </div>
-  <div style="width: 553px; height: 374px; left: 9px; top: 120px; position: absolute; background: #1E1E1E; border-left: 1px #7F8B99 solid; border-right: 1px #7F8B99 solid; border-bottom: 2px #7F8B99 solid"></div>
+  <div id="screen-area" class="screen-area" style="width: 553px; height: 374px; left: 9px; top: 120px; position: absolute; background: #1E1E1E; border-left: 1px #7F8B99 solid; border-right: 1px #7F8B99 solid; border-bottom: 2px #7F8B99 solid; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    <canvas id="popcorn-canvas" width="553" height="374" style="position: absolute; inset: 0; pointer-events: none; z-index: 5;"></canvas>
+    <div id="flash-overlay" style="position: absolute; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 20; transition: opacity 0.08s;"></div>
+    <img id="popcorn-img" src="popcorn.webp" alt="Popcorn" draggable="false" style="max-width: 100%; max-height: 100%; object-fit: contain; z-index: 2; pointer-events: none; transform-origin: center 75%; will-change: transform, filter;">
+  </div>
   <div style="width: 553px; height: 27px; left: 9px; top: 494px; position: absolute; background: black; overflow: hidden">
     <div style="left: 104px; top: 1px; position: absolute; color: #B1C8EE; font-size: 20px; font-family: 'Pixelify Sans', sans-serif; font-weight: 400; word-wrap: break-word">Ready</div>
   </div>
@@ -157,7 +93,7 @@
       <div style="width: 8px; height: 14px; left: 3px; top: 5px; position: absolute; background: #D6E9D5"></div>
       <div style="width: 7px; height: 2px; left: 3px; top: 5px; position: absolute; background: white"></div>
     </div>
-    <div style="width: 51px; height: 55px; left: 9px; top: 13px; position: absolute; overflow: hidden">
+    <div id="play-button" class="wmp-button" style="width: 51px; height: 55px; left: 9px; top: 13px; position: absolute; overflow: hidden;">
       <div style="width: 51px; height: 54px; left: 0px; top: 2px; position: absolute; background: #253C75; border-radius: 9999px"></div>
       <div style="width: 49px; height: 52px; left: 1px; top: 0px; position: absolute; background: linear-gradient(180deg, #F5FAFF 0%, #CDDEF0 45%, #8BA7CF 100%); border-radius: 9999px; border: 1px #314B79 solid"></div>
       <div style="width: 45px; height: 48px; left: 3px; top: 2px; position: absolute; border-radius: 9999px; border: 1px rgba(255, 255, 255, 0.63) solid"></div>
@@ -219,5 +155,6 @@
   <div class="retro-screen-overlay"></div>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>

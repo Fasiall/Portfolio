@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: #3A6EA5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  user-select: none;
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Player Wrapper */
+.player-wrapper {
+  position: relative;
+  border-radius: 13px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  image-rendering: pixelated;
+}
+
+/* WMP Container dengan Filter Retro Burik */
+.wmp-container {
+  width: 572px;
+  height: 609px;
+  position: relative;
+  background: #0645C5;
+  overflow: hidden;
+  border-radius: 13px;
+  outline: 1px #00338E solid;
+  outline-offset: -1px;
+  image-rendering: pixelated;
+  filter: url(#filter-burik) contrast(120%) saturate(115%);
+}
+
+/* Layer Overlay CRT Scanlines & Dither */
+.retro-screen-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.28) 0px,
+      rgba(0, 0, 0, 0.28) 1.5px,
+      transparent 1.5px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.07) 0px,
+      rgba(0, 255, 0, 0.07) 1px,
+      rgba(0, 0, 255, 0.07) 2px,
+      transparent 3px
+    ),
+    repeating-conic-gradient(
+      rgba(0, 0, 0, 0.12) 0% 25%,
+      transparent 0% 50%
+    ) 50% / 3px 3px,
+    radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+/* Screen Area */
+.screen-area {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.screen-area:active #popcorn-img {
+  transform: scale(0.92, 1.1) !important;
+}
+
+/* Screen Shake Animation pada saat meledak */
+@keyframes screenShakeExplosion {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-10px, 8px) rotate(-1.5deg); }
+  20% { transform: translate(9px, -8px) rotate(2deg); }
+  30% { transform: translate(-8px, -6px) rotate(-1.5deg); }
+  40% { transform: translate(8px, 7px) rotate(1.5deg); }
+  50% { transform: translate(-5px, 4px) rotate(-1deg); }
+  60% { transform: translate(5px, -4px) rotate(1deg); }
+  70% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+  80% { transform: translate(3px, -2px) rotate(0.5deg); }
+  90% { transform: translate(-1px, 1px) rotate(0deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.shake-explosion {
+  animation: screenShakeExplosion 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Play button hover & click */
+.wmp-button {
+  cursor: pointer;
+  transition: transform 0.05s ease;
+}
+
+.wmp-button:active {
+  transform: scale(0.92);
+}
